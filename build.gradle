@@ -9,6 +9,9 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
 }
+configurations {
+    mybatisGenerator
+}
 ext {
     springVersion = "4.3.7.RELEASE"
     log4jVersion="2.8.1"
@@ -51,6 +54,8 @@ dependencies {
     compile(
             "org.mybatis:mybatis:$mybatisVersion",
             "org.mybatis:mybatis-spring:$mybatisSpringVersion",
+            "tk.mybatis:mapper:3.4.0",
+            "javax.persistence:persistence-api:1.0.2",
             "com.github.pagehelper:pagehelper:4.1.6"
     )
     compile(
@@ -64,13 +69,10 @@ dependencies {
     )
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0-b03'
-    mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.2'
-    mybatisGenerator 'mysql:mysql-connector-java:5.1.39'
-    mybatisGenerator 'tk.mybatis:mapper:3.3.2'
+    mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.5'
+    mybatisGenerator 'mysql:mysql-connector-java:5.1.40'
+    mybatisGenerator 'tk.mybatis:mapper:3.3.9'
 }
-modelPackage=com.dreamliner.mhml.entity
-mapperPackage=com.dreamliner.mhml.mapper
-sqlMapperPackage=mybatis_mapper
 def getDbProperties = {
     def properties = new Properties()
     file("src/main/resources/generator/initGenerator.properties").withInputStream { inputStream ->
@@ -88,9 +90,7 @@ task mybatisGenerate << {
     ant.properties['tableName'] = properties.getProperty("tableName")
     ant.properties['src_main_java'] = sourceSets.main.java.srcDirs[0].path
     ant.properties['src_main_resources'] = sourceSets.main.resources.srcDirs[0].path
-    ant.properties['modelPackage'] = this.modelPackage
-    ant.properties['mapperPackage'] = this.mapperPackage
-    ant.properties['sqlMapperPackage'] = this.sqlMapperPackage
+    ant.properties['packageName'] = properties.getProperty("packageName")
     ant.taskdef(
             name: 'mbgenerator',
             classname: 'org.mybatis.generator.ant.GeneratorAntTask',
@@ -107,9 +107,7 @@ task mybatisGenerate << {
             propertyref(name: 'tableName')
             propertyref(name: 'src_main_java')
             propertyref(name: 'src_main_resources')
-            propertyref(name: 'modelPackage')
-            propertyref(name: 'mapperPackage')
-            propertyref(name: 'sqlMapperPackage')
+            propertyref(name: 'packageName')
         }
     }
 }

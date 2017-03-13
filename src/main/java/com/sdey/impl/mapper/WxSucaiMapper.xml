@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdey.impl.mapper.WxSucaiMapper">
+  <resultMap id="BaseResultMap" type="com.sdey.api.po.WxSucai">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="imgpath" jdbcType="VARCHAR" property="imgpath" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="jianjie" jdbcType="VARCHAR" property="jianjie" />
+    <result column="linkurl" jdbcType="VARCHAR" property="linkurl" />
+    <result column="createdata" jdbcType="TIMESTAMP" property="createdata" />
+    <result column="menukey" jdbcType="VARCHAR" property="menukey" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, imgpath, title, jianjie, linkurl, createdata, menukey
+  </sql>
+</mapper>
